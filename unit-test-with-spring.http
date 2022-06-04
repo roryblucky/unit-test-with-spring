@@ -1,0 +1,44 @@
+POST http://localhost:8080/http/anything
+Accept: application/json
+Content-Type: application/json
+
+{
+  "requestId": "123",
+  "content": "555555"
+}
+
+> {%
+client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+        client.assert(response.body.data === "Success")
+    });
+ %}
+
+<> 2022-06-04T194442.200.json
+
+###
+POST http://localhost:8080/http/anythingWithCallingService
+Accept: application/json
+Content-Type: application/json
+
+{
+  "requestId": "123",
+  "content": "555555"
+}
+
+> {%
+client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+  %}
+<> 2022-06-04T194443.200.json
+<> 2022-06-04T194319.200.json
+<> 2022-06-04T194208.200.json
+<> 2022-06-04T194120.200.json
+<> 2022-06-04T194055.200.json
+<> 2022-06-04T193811.200.json
+<> 2022-06-04T193745.200.json
+<> 2022-06-04T193356.500.json
+<> 2022-06-04T193309.500.json
+<> 2022-06-04T193140.200.json
+<> 2022-06-04T192940.200.json
