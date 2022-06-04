@@ -3,8 +3,7 @@ Demo project for writing unit tests in a spring boot project
 
 # Why
 
-Some of us always feel really struggle on writing unit tests, especially in a spring boot project. 
-While i, unit tests are the most major part TDD pattern, so I created this repo and hope it coud help for your own projects. 
+Some of us always feel really struggling on writing unit tests, especially in a spring boot project. While unit tests are the major part TDD pattern, so I created this repo and hope it could help for your own projects. 
 
 
 # Library
