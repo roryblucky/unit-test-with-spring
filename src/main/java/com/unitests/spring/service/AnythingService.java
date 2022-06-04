@@ -14,7 +14,6 @@ public class AnythingService {
 
     public String getAnything() {
         String body = okhttp3Template.getForEntity("https://httpbin.org/anything", String.class).getBody();
-        //insert into DB;
         return body;
     }
 }

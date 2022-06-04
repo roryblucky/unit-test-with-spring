@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: unit-test-with-spring
+
+
+
