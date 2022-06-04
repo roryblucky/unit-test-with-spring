@@ -4,16 +4,11 @@ import com.unitests.spring.dto.APIResponse;
 import com.unitests.spring.dto.AnythingReq;
 import com.unitests.spring.service.AnythingService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
 import java.util.stream.Collectors;
@@ -22,16 +17,26 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class HttpUtilController {
 
-
-    private AnythingService anythingService;
+    private final AnythingService anythingService;
 
     @PostMapping("/http/anything")
     public APIResponse anything(@RequestBody @Valid AnythingReq request, BindingResult bindingResult) {
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             return APIResponse.error("400", bindingResult.getAllErrors()
                     .stream().map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.toList()));
         }
         return APIResponse.ok("Success");
+    }
+
+
+    @PostMapping("/http/anythingWithCallingService")
+    public APIResponse anythingWithCallingService(@RequestBody @Valid AnythingReq request, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return APIResponse.error("400", bindingResult.getAllErrors()
+                    .stream().map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.toList()));
+        }
+
+        return APIResponse.ok(this.anythingService.getAnything());
     }
 
 }
