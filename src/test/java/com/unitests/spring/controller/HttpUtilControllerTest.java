@@ -2,6 +2,7 @@ package com.unitests.spring.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.unitests.spring.dto.AnythingReq;
+import com.unitests.spring.mapper.AnythingEntity;
 import com.unitests.spring.service.AnythingService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -15,6 +16,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.UUID;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -88,8 +90,9 @@ class HttpUtilControllerTest {
     }
 
     @Test
-    void testAnythingWithCallingService() throws Exception {
-        when(service.getAnything()).thenReturn("Success from service");
+    void testAnythingWithCallingServiceWithValidReq() throws Exception {
+        when(service.getAnythingWithDb(any()))
+                .thenReturn(AnythingEntity.builder().id("123").content("Success from service").build());
 
         AnythingReq anythingReq = new AnythingReq();
         anythingReq.setRequestId(UUID.randomUUID().toString());
@@ -101,6 +104,22 @@ class HttpUtilControllerTest {
                 .andDo(print()) // print the request details
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status").value("200"))
-                .andExpect(jsonPath("$.data").value("Success from service"));
+                .andExpect(jsonPath("$.data.content").value("Success from service"));
     }
+
+    @Test
+    void testAnythingWithCallingServiceWithInvalidReq() throws Exception {
+
+        AnythingReq anythingReq = new AnythingReq();
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/http/anythingWithCallingService")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(anythingReq)))
+                .andDo(print()) // print the request details
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value("400"))
+                .andExpect(jsonPath("$.errors").isNotEmpty());
+    }
+
+
 }

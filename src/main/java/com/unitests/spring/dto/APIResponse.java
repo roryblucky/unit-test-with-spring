@@ -17,10 +17,6 @@ public class APIResponse {
         return APIResponse.builder().status(status).errors(errors).build();
     }
 
-    public static APIResponse ok() {
-        return APIResponse.builder().status("200").build();
-    }
-
     public static APIResponse ok(Object data) {
         return APIResponse.builder().status("200").data(data).build();
     }

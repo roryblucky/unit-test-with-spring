@@ -36,7 +36,7 @@ public class HttpUtilController {
                     .stream().map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.toList()));
         }
 
-        return APIResponse.ok(this.anythingService.getAnything());
+        return APIResponse.ok(this.anythingService.getAnythingWithDb(request));
     }
 
 }
