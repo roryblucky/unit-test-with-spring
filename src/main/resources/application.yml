@@ -2,5 +2,9 @@ spring:
   application:
     name: unit-test-with-spring
 
-
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:pgsql://localhost:5432/unit_tests
+    username: root
+    password: root
 
